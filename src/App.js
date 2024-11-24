@@ -30,7 +30,7 @@ function App() {
     <div className="app d-flex flex-column justify-content-center align-items-center">
       <div className="d-flex">
         <input
-          type="search"
+          type="text"
           placeholder="Enter city name"
           onChange={handleChange}
         />

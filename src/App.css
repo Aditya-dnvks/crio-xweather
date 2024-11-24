@@ -2,3 +2,18 @@
   height: 100vh;
   margin-bottom: -30px;
 }
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #4caf50;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  height: 50px;
+}
