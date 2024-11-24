@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import "./App.css";
+import axios from "axios";
+import WeatherCard from "./WeatherCard";
 function App() {
+  const [searchText, setSearchText] = useState("");
+  const [weatherData, setWeatherData] = useState("");
+  const [loader, setLoader] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      setLoader(true);
+      const resp = await axios.get(
+        `https://api.weatherapi.com/v1/current.json?q=${searchText}&key=91b99eb84de1408f8cf73626242411`
+      );
+      setWeatherData(resp.data);
+    } catch (err) {
+      console.log(err);
+      alert("Failed to fetch weather data");
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setSearchText(e.target.value.toLowerCase());
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app d-flex flex-column justify-content-center align-items-center">
+      <div className="d-flex">
+        <input
+          type="search"
+          placeholder="Enter city name"
+          onChange={handleChange}
+        />
+        <button style={{ backgroundColor: "lightgreen" }} onClick={fetchData}>
+          Search
+        </button>
+      </div>
+      <div>
+        {loader ? (
+          <p> Loading data...</p>
+        ) : (
+          weatherData && <WeatherCard weatherData={weatherData} />
+        )}
+      </div>
     </div>
   );
 }
